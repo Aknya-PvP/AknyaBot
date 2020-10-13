@@ -1,12 +1,15 @@
-const {Client,Collection} = require('discord.js'),
+const {Client,Collection} = require('discord.js');
     Logger = require('../Utils/Logger'),
     Utils = require('../Utils/Utils');
+    const {readdir} = require('fs')
 
-class Class extends Client{
+class Aknya extends Client{
     constructor(option) {
         super(option.client);
+        ["commands","aliases","cooldowns"].forEach(x=>this[x] = new Collection());
 
         this.config = option.config
+        require("../Utils/errorHandler")(this.client);
         this.logger = new Logger()
         this.utils = new Utils
     }
@@ -21,12 +24,54 @@ class Class extends Client{
     }
 
     _cmdLoad = () =>{
+        readdir("./src/commands/", (err, files) => {
+            if (err) this.emit("error", err);
+            for (const dir of files) {
+                readdir(`./src/commands/${dir}/`, (err, commands) => {
+                    if (err) this.emit("error", err);
+                    for (const com of commands) {
+                        try {
+                            if (!com) return;
+                            const command = new (require(`../commands/${dir}/${com}`))(this);
+                            this.commands.set(command.help.name, command);
+                            command.conf.aliases.forEach(a => this.aliases.set(a, command.help.name));
+                            this.logger.info(`${com} chargé`)
 
+                        } catch (e) {
+                            this.emit("error", `${com} n"a pas chargé ${e.message}`)
+                        }
+                    }
+
+                })
+            }
+        });
     }
 
     _evtLoad = () =>{
-
+        readdir("./src/event", (err, files) => {
+            if (!files) return;
+            if (err) this.emit("error", err);
+            for (const dir of files) {
+                readdir(`./src/event/${dir}`, (err, file) => {
+                    if (!file) return;
+                    if (err) this.emit("error", err);
+                    for (const evt of file) {
+                        try {
+                            if (!evt) return;
+                            const event =require(`../event/${dir}/${evt}`);
+                            console
+                            this.logger.info(`${evt} chargé`);
+                            super.on(evt.split(".")[0], event.bind(null, this));
+                        } catch (e) {
+                            this.emit("error", `${evt} n"a pas chargé ${e.stack}`)
+                        }
+                    }
+                })
+            }
+        });
     }
 
 
 }
+
+module.exports = Aknya
