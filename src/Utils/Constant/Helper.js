@@ -7,7 +7,15 @@ const HELPER ={
                 usage:"suggest <texte>",
                 aliases:["s","suggestion"],
                 coolDown:5000
+            },
+            HELP:{
+                name:"help",
+                description:"Envoie la page d'aide",
+                usage:"help <command>",
+                aliases:["h"],
+                coolDown:5000
             }
+
         }
     }
 }

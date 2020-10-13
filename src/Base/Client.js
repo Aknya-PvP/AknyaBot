@@ -1,5 +1,6 @@
-const {Client,Collection} = require('discord.js');
+const {Client,Collection} = require('discord.js'),
     Logger = require('../Utils/Logger'),
+    Suggest = require('../module/suggest'),
     Utils = require('../Utils/Utils');
     const {readdir} = require('fs')
 
@@ -11,7 +12,8 @@ class Aknya extends Client{
         this.config = option.config
         require("../Utils/errorHandler")(this.client);
         this.logger = new Logger()
-        this.utils = new Utils
+        this.suggest = new Suggest(this)
+        this.utils = new Utils()
     }
 
     init = () =>{
@@ -24,15 +26,15 @@ class Aknya extends Client{
     }
 
     _cmdLoad = () =>{
-        readdir("./src/commands/", (err, files) => {
+        readdir("./src/command/", (err, files) => {
             if (err) this.emit("error", err);
             for (const dir of files) {
-                readdir(`./src/commands/${dir}/`, (err, commands) => {
+                readdir(`./src/command/${dir}/`, (err, commands) => {
                     if (err) this.emit("error", err);
                     for (const com of commands) {
                         try {
                             if (!com) return;
-                            const command = new (require(`../commands/${dir}/${com}`))(this);
+                            const command = new (require(`../command/${dir}/${com}`))(this);
                             this.commands.set(command.help.name, command);
                             command.conf.aliases.forEach(a => this.aliases.set(a, command.help.name));
                             this.logger.info(`${com} chargé`)

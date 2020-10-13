@@ -4,5 +4,7 @@ module.exports = async (client)=>{
     await channel.messages.fetch({ limit: 100 });
 
 
+    console.log("pret")
+
 
 }
