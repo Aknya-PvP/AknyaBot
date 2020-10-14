@@ -1,8 +1,9 @@
 const {Client,Collection} = require('discord.js'),
     Logger = require('../Utils/Logger'),
     Suggest = require('../module/suggest'),
+    Ticket = require('../module/ticket'),
     Utils = require('../Utils/Utils');
-    const {readdir} = require('fs')
+    const {readdir,readFile,writeFile} = require('fs')
 
 class Aknya extends Client{
     constructor(option) {
@@ -13,14 +14,69 @@ class Aknya extends Client{
         require("../Utils/errorHandler")(this.client);
         this.logger = new Logger()
         this.suggest = new Suggest(this)
+        this.ticket = new Ticket(this)
         this.utils = new Utils()
     }
 
-    init = () =>{
-        this._cmdLoad();
-        this._evtLoad();
-        this._connect();
+    init = () => {
+        this.initJSON()
+        this._cmdLoad()
+        this._evtLoad()
+        this._connect()
+
     }
+
+    initJSON = () =>{
+        let json = './src/asset/JSON/ticket.json'
+        let backup = './src/asset/JSON/backup.json'
+        readFile(json,'utf8',function (err,data) {
+            try {
+                if(!data){
+                    console.log('Donnée vide')
+
+                    readFile(backup,'utf8',function (err,data) {
+                        if(!data) return console.log("Backup vide")
+                        writeFile(json,data,(err) =>{
+                            console.log('Backup push')
+
+                        })
+                    })
+                    return false
+                }
+                let parsedData = JSON.parse(data.toString())
+                if (parsedData.id === undefined) {
+                    let rawData = {
+                        id: 0,
+                        current: []
+                    }
+                    let StringifyData = JSON.stringify(rawData, null, 4);
+                    writeFile(json, StringifyData, (err) => {
+                        console.log('Data implemented')
+
+                    })
+                }
+                readFile(json,'utf8',function (err,data) {
+                    writeFile(backup,data,(err) =>{
+                        console.log('Data backup')
+                    })
+                })
+                return true
+            } catch (err) {
+                console.log(err)
+                console.error('Erreur lors de la lecture des donnée JSON, Recovery mode en cours')
+
+                readFile(backup,'utf8',function (err,data) {
+                    if(!data) return console.log("Backup vide")
+                    writeFile(json,data,(err) =>{
+                        console.log('Backup push')
+                        return false
+
+                    })
+                })
+            }
+        })
+    }
+
     _connect = () =>{
         super.login(this.config.token)
     }

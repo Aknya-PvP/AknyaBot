@@ -14,6 +14,27 @@ const HELPER ={
                 usage:"help <command>",
                 aliases:["h"],
                 coolDown:5000
+            },
+            TICKET:{
+                name:"ticket",
+                description:"Fait un ticket",
+                usage:"ticket",
+                aliases:["t"],
+                coolDown:5000
+            },
+            REMTICKET:{
+                name:"remticket",
+                description:"Supprime un ticket",
+                usage:"remticket [channel]",
+                aliases:["rt"],
+                coolDown:5000
+            },
+            GETTICKET:{
+                name:"getticket",
+                description:"Get les logs d'un ticket",
+                usage:"getticket <id>",
+                aliases:["gt"],
+                coolDown:5000
             }
 
         }

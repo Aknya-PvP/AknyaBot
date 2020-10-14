@@ -5,7 +5,7 @@ module.exports = {
 
     },
     config:{
-        prefix:'/',
+        prefix:'*',
         owners : [
             "236627494764150784", //zechaos
             "297457769424879617",//frosh
