@@ -35,8 +35,7 @@ const HELPER ={
                 usage:"getticket <id>",
                 aliases:["gt"],
                 coolDown:5000
-            }
-
+            },
         }
     }
 }
