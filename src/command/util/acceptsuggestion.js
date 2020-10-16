@@ -9,9 +9,10 @@ class Acceptsuggestion extends Command{
         if(!args[0]){
             return message.channel.send('Merci d\'indiqué un texte')
         }
-
-       let msg =  this.client.suggest.acceptsuggestion(message,args[0])
-        console.log(msg)
+        if(!this.client.config.owners.includes(message.author.id)){
+            return message.channel.send('Vous n\'etes pas autorisé a utilise cette commandes')
+        }
+       this.client.suggest.acceptsuggestion(message,args[0])
 
     }
 }
