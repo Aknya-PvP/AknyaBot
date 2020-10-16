@@ -9,8 +9,7 @@ class Remticket extends Command{
         let querry =  !message.mentions.channels.first() ? args[0] :  message.mentions.channels.first() ? message.mentions.channels.first() : message.channel.name
         let channel = await message.guild.channels.cache.find(x => x.name.includes(querry) || x.name === querry.name )
         if(!channel) return message.channel.send("Ce channel n'est pas un ticket")
-        console.log(channel)
-            this.client.ticket.removeTicket(message,channel)
+        this.client.ticket.removeTicket(message,channel)
     }
 }
 
