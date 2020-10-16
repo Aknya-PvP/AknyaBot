@@ -1,5 +1,5 @@
 const Command = require("../../Base/Command");
-const {HELPER } = require("../../utils/Constant/CommandeHelper");
+const {HELPER } = require("../../Utils/Constant/Helper");
 
 class Ban extends Command{
     constructor(client){
