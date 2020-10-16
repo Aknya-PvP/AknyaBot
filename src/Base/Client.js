@@ -2,8 +2,8 @@ const {Client,Collection} = require('discord.js'),
     Logger = require('../Utils/Logger'),
     Suggest = require('../module/suggest'),
     Ticket = require('../module/ticket'),
-    Utils = require('../Utils/Utils');
-    const {readdir,readFile,writeFile} = require('fs')
+    Utils = require('../Utils/Utils'),
+    {readdir,readFile,writeFile} = require('fs')
 
 class Aknya extends Client{
     constructor(option) {
@@ -23,7 +23,6 @@ class Aknya extends Client{
         this._cmdLoad()
         this._evtLoad()
         this._connect()
-
     }
 
     initJSON = () =>{
