@@ -3,7 +3,7 @@ const {HELPER } = require("../../Utils/Constant/Helper");
 
 class Kick extends Command{
     constructor(client){
-        super(client,HELPER.COMMAND.KICK);
+        super(client,HELPER.COMMAND.UTILS.KICK);
     }
 
     async run(message,args){

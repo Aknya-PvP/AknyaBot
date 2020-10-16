@@ -3,7 +3,7 @@ const {HELPER } = require("../../Utils/Constant/Helper");
 
 class Ban extends Command{
     constructor(client){
-        super(client,HELPER.COMMAND.BAN);
+        super(client,HELPER.COMMAND.UTILS.BAN);
     }
 
     async run(message,args){
