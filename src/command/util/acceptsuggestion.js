@@ -6,7 +6,7 @@ class Acceptsuggestion extends Command{
     }
 
     run(message,args){
-        if(!args[0]){
+        if(!args[0] || isNaN(args[0])){
             return message.channel.send('Merci d\'indiqué un texte')
         }
         if(!this.client.config.owners.includes(message.author.id)){
