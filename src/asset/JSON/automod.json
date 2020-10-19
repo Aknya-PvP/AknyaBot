@@ -1,0 +1,39 @@
+{
+  "punishment": {
+    "spam": {
+      "sanction": "mute",
+      "attempts": 3,
+      "timeMin": 3600000,
+      "timeMax": 14400000
+    },
+    "flood": {
+      "sanction": "mute",
+      "attempts": 1,
+      "limit":5,
+      "timeMin": 3600000,
+      "timeMax": 14400000
+    },
+    "injuriesMin": {
+      "words": [],
+      "sanction": "mute",
+      "attempts": 1,
+      "timeMin": 1800000,
+      "timeMax": 1800000
+    },
+    "injuriesMoy": {
+      "words": [],
+      "sanction": "ban",
+      "attempts": 1,
+      "timeMin": 86400000,
+      "timeMax": 345600000
+    },
+    "injuriesGRV": {
+      "words": [],
+      "sanction": "ban",
+      "attempts": 1,
+      "timeMin": 86400000,
+      "timeMax": 345600000
+    }
+  },
+  "users": []
+}
